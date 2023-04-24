@@ -6,8 +6,9 @@ import altair as alt
 st.set_page_config(layout="wide")
 
 # Create a sidebar with file upload functionality
-st.sidebar.title("Upload CSV")
-uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type="csv")
+sidebar = st.sidebar
+sidebar.title("Upload CSV")
+uploaded_file = sidebar.file_uploader("Choose a CSV file", type="csv")
 
 # Main page content
 st.title("Stacked Bar Chart with Vega-Lite")
@@ -28,11 +29,17 @@ if uploaded_file is not None:
 
     # Allow the user to filter the data
     filtered_df = df
-    if st.checkbox("Enable Filtering"):
+    sidebar_selectbox = sidebar.selectbox(
+        "Select an option",
+        ["No filter", "Filter by column"]
+    )
+    if sidebar_selectbox == "Filter by column":
         filter_column = st.selectbox("Select Filter Column", columns)
         filter_value = st.text_input("Enter Filter Value")
         if filter_value:
             filtered_df = filtered_df[filtered_df[filter_column] == filter_value]
+            if st.button("Clear filter"):
+                filtered_df = df
 
     # Create a stacked bar chart using Vega-Lite
     chart = alt.Chart(filtered_df).mark_bar().encode(
