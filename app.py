@@ -37,7 +37,7 @@ if uploaded_file is not None:
     # Create a stacked bar chart using Vega-Lite
     chart = alt.Chart(filtered_df).mark_bar().encode(
         x=alt.X(x_axis, type="ordinal", title=x_axis),
-        y=alt.Y("count()", title="Count"),
+        y=alt.Y("sum()", title="SUM"),
         color=alt.Color(y_axis, type="nominal", title=y_axis)
     ).properties(
         width=700,
