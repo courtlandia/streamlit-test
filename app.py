@@ -56,7 +56,7 @@ if uploaded_file is not None:
             'xanchor': 'center'
         },
         xaxis_title=x_axis,
-        yaxis_title="Sum"
+        yaxis_title=y_axis
     )
 
     st.plotly_chart(fig, use_container_width=True)
